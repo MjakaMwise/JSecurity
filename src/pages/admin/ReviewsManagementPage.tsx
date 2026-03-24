@@ -126,15 +126,15 @@ export function ReviewsManagementPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-slate-900">Reviews Management</h2>
-          <p className="text-slate-600 mt-1">Manage customer reviews and testimonials</p>
+          <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">Reviews Management</h2>
+          <p className="text-slate-600 mt-1 text-sm sm:text-base">Manage customer reviews and testimonials</p>
         </div>
         <Button
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
           onClick={() => setIsCreateModalOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
@@ -143,8 +143,8 @@ export function ReviewsManagementPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-4 items-center flex-wrap">
-        <div className="relative flex-1 max-w-xs">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="relative flex-1 sm:max-w-xs">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
           <Input
             placeholder="Search reviews..."
@@ -153,7 +153,7 @@ export function ReviewsManagementPage() {
               setSearchTerm(e.target.value)
               setCurrentPage(1)
             }}
-            className="pl-10"
+            className="pl-10 w-full"
           />
         </div>
         <Select
@@ -163,7 +163,7 @@ export function ReviewsManagementPage() {
             setCurrentPage(1)
           }}
         >
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="w-full sm:w-40">
             <SelectValue placeholder="Filter by rating" />
           </SelectTrigger>
           <SelectContent>
@@ -179,8 +179,8 @@ export function ReviewsManagementPage() {
 
       {/* Table Card */}
       <Card>
-        <CardHeader>
-          <CardTitle>Customer Reviews</CardTitle>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg sm:text-xl">Customer Reviews</CardTitle>
           <CardDescription>
             Showing {paginatedReviews.length} of {filteredReviews.length} reviews
           </CardDescription>
@@ -202,7 +202,41 @@ export function ReviewsManagementPage() {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
+              {/* Mobile card list */}
+              <div className="space-y-3 md:hidden">
+                {paginatedReviews.map(review => (
+                  <div key={review.id} className="border rounded-lg p-4 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="font-medium text-slate-900">{review.name}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          {format(new Date(review.created_at), 'MMM dd, yyyy')}
+                        </p>
+                      </div>
+                      <div className="flex gap-1 shrink-0">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(review)}>
+                          <Edit2 className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={() => setDeleteId(review.id)}>
+                          <Trash2 className="h-4 w-4 text-red-600" />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {renderStars(review.rating)}
+                      {review.verified ? (
+                        <Badge className="bg-green-600 text-xs">Verified</Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-xs">Unverified</Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-slate-600 line-clamp-2">{review.quote}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop table */}
+              <div className="hidden md:block overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -255,13 +289,14 @@ export function ReviewsManagementPage() {
               </div>
 
               {/* Pagination */}
-              <div className="flex items-center justify-between mt-6 pt-4 border-t">
-                <span className="text-sm text-slate-600">
+              <div className="flex flex-col gap-2 mt-6 pt-4 border-t sm:flex-row sm:items-center sm:justify-between">
+                <span className="text-sm text-slate-600 text-center sm:text-left">
                   Page {currentPage} of {totalPages || 1}
                 </span>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
+                    className="flex-1 sm:flex-none"
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
                   >
@@ -269,6 +304,7 @@ export function ReviewsManagementPage() {
                   </Button>
                   <Button
                     variant="outline"
+                    className="flex-1 sm:flex-none"
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages || totalPages === 0}
                   >
