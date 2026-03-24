@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy: 220 78% 10%;
+    --navy2: 224 57% 16%;
+    --navy3: 222 68% 19%;
+    --cyan: 191 100% 50%;
+    --cyan2: 198 100% 37%;
+    --gray: 215 30% 75%;
+    --gold: 51 100% 50%;
+    --green: 145 58% 50%;
+
+    --background: var(--navy);
+    --foreground: 0 0% 100%;
+    --card: var(--navy2);
+    --card-foreground: 0 0% 100%;
+    --popover: var(--navy2);
+    --popover-foreground: 0 0% 100%;
+    --primary: var(--cyan);
+    --primary-foreground: var(--navy);
+    --secondary: var(--cyan2);
+    --secondary-foreground: 0 0% 100%;
+    --muted: var(--navy3);
+    --muted-foreground: var(--gray);
+    --accent: var(--cyan);
+    --accent-foreground: var(--navy);
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 191 100% 50% / 0.15;
+    --input: var(--navy3);
+    --ring: var(--cyan);
+    --radius: 0.5rem;
+
+    --sidebar-background: var(--navy2);
+    --sidebar-foreground: var(--gray);
+    --sidebar-primary: var(--cyan);
+    --sidebar-primary-foreground: var(--navy);
+    --sidebar-accent: var(--navy3);
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 191 100% 50% / 0.15;
+    --sidebar-ring: var(--cyan);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* ── FADE-UP ANIMATION ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@layer components {
+  /* ── EYEBROW LABEL ── */
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 1.1vw, 12px);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* ── THIN RULE DIVIDER ── */
+  .rule {
+    width: 4rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.15;
+    margin: 1.5rem 0;
+  }
+
+  /* ── GLASS CARDS ── */
+  .glass-card {
+    background: hsl(var(--navy2));
+    border: 1px solid hsl(var(--cyan) / 0.12);
+    border-radius: 8px;
+  }
+  .glass-card-elevated {
+    background: hsl(var(--navy3));
+    border: 1px solid hsl(var(--cyan) / 0.15);
+    border-radius: 8px;
+  }
+
+  /* ── BADGE PILL (eyebrow variant) ── */
+  .badge-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 1vw, 11px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0;
+    color: hsl(var(--cyan));
+    background: none;
+    border: none;
+    border-radius: 0;
+    opacity: 0.7;
+  }
+  .badge-pill::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: hsl(var(--cyan));
+    opacity: 0.5;
+  }
+
+  /* ── INDUSTRY CHIP → MONO TAG ── */
+  .industry-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 0.9vw, 11px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 transition-all duration-300 cursor-default;
+    background: transparent;
+    color: hsl(var(--gray));
+    border: 1px solid hsl(var(--cyan) / 0.15);
+  }
+  .industry-chip:hover {
+    background: hsl(var(--cyan) / 0.08);
+    color: hsl(var(--cyan));
+    border-color: hsl(var(--cyan) / 0.35);
+  }
+
+  /* ── SECTION PADDING ── */
+  .section-padding {
+    @apply py-20 px-4 md:px-8;
+  }
+
+  /* ── STAT NUMBER ── */
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1;
+    color: hsl(var(--cyan));
+  }
+
+  /* ── STAR / VERIFIED ── */
+  .star-gold {
+    color: hsl(var(--gold));
+  }
+  .verified-badge {
+    @apply inline-flex items-center gap-1 text-xs font-medium;
+    color: hsl(var(--green));
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--navy));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--cyan) / 0.3);
+    border-radius: 3px;
+  }
+}
