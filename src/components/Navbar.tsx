@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { animate } from "animejs";
@@ -17,7 +17,19 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const navRef = useRef<HTMLElement>(null);
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLogoClick = () => {
+    clickCountRef.current += 1;
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    clickTimerRef.current = setTimeout(() => {
+      if (clickCountRef.current === 3) navigate("/login");
+      clickCountRef.current = 0;
+    }, 400);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -58,7 +70,7 @@ const Navbar = () => {
       }}
     >
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center gap-1">
+        <Link to="/" className="flex items-center gap-1" onClick={handleLogoClick}>
           <span className="text-3xl font-black italic" style={{ color: "#00D4FF", fontFamily: "Calibri, sans-serif" }}>J</span>
           <span className="text-xs font-medium tracking-[0.3em]" style={{ color: "#FFFFFF", fontFamily: "Calibri, sans-serif" }}>SECURITY</span>
         </Link>
