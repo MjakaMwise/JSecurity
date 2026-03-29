@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { animate, stagger, onScroll } from "animejs";
-import { Shield, Lock, Camera, ClipboardList, UserCheck, Siren, Microscope, Bot, Globe, Mail, Phone, MapPin } from "lucide-react";
+import { animate, onScroll } from "animejs";
+
+import { Shield, Lock, Camera, ClipboardList, UserCheck, Siren, Microscope, Bot, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TypewriterEffect from "@/components/aceternity/TypewriterEffect";
 import Spotlight from "@/components/aceternity/Spotlight";
@@ -41,11 +42,6 @@ const stats = [
 
 const Index = () => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const whyRef = useRef<HTMLDivElement>(null);
-  const industriesRef = useRef<HTMLDivElement>(null);
-  const cctvRef = useRef<HTMLDivElement>(null);
-  const contactRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Hero shapes scroll-driven parallax
@@ -65,138 +61,6 @@ const Index = () => {
       }
     }
 
-    // Services section smooth scroll animation
-    if (servicesRef.current) {
-      // Section-level parallax
-      animate(servicesRef.current, {
-        translateY: [100, -50],
-        opacity: [0, 1],
-        duration: 1200,
-        ease: "easeOutQuad",
-        autoplay: onScroll({
-          target: servicesRef.current,
-          enter: "bottom 85%",
-        }),
-      });
-
-      // Card stagger reveal
-      const cards = servicesRef.current.querySelectorAll(".reveal-item");
-      cards.forEach((el) => {
-        (el as HTMLElement).style.opacity = "0";
-        (el as HTMLElement).style.transform = "translateY(50px)";
-      });
-      animate(cards, {
-        opacity: [0, 1],
-        translateY: [50, 0],
-        duration: 600,
-        delay: stagger(60),
-        ease: "outQuart",
-        autoplay: onScroll({
-          target: servicesRef.current,
-          enter: "bottom 70%",
-        }),
-      });
-    }
-
-    // Why section smooth scroll animation
-    if (whyRef.current) {
-      // Section-level parallax
-      animate(whyRef.current, {
-        translateY: [100, -50],
-        opacity: [0, 1],
-        duration: 1200,
-        ease: "easeOutQuad",
-        autoplay: onScroll({
-          target: whyRef.current,
-          enter: "bottom 85%",
-        }),
-      });
-
-      // Items stagger reveal
-      const items = whyRef.current.querySelectorAll(".reveal-item");
-      items.forEach((el) => {
-        (el as HTMLElement).style.opacity = "0";
-        (el as HTMLElement).style.transform = "translateY(40px)";
-      });
-      animate(items, {
-        opacity: [0, 1],
-        translateY: [40, 0],
-        duration: 600,
-        delay: stagger(80),
-        ease: "outQuart",
-        autoplay: onScroll({
-          target: whyRef.current,
-          enter: "bottom 70%",
-        }),
-      });
-    }
-
-    // Industries section smooth scroll animation
-    if (industriesRef.current) {
-      // Section-level parallax
-      animate(industriesRef.current, {
-        translateY: [80, -30],
-        opacity: [0, 1],
-        duration: 1000,
-        ease: "easeOutQuad",
-        autoplay: onScroll({
-          target: industriesRef.current,
-          enter: "bottom 85%",
-        }),
-      });
-
-      // Chips stagger reveal
-      const chips = industriesRef.current.querySelectorAll(".reveal-item");
-      chips.forEach((el) => {
-        (el as HTMLElement).style.opacity = "0";
-        (el as HTMLElement).style.transform = "translateY(30px)";
-      });
-      animate(chips, {
-        opacity: [0, 1],
-        translateY: [30, 0],
-        duration: 500,
-        delay: stagger(50),
-        ease: "outQuart",
-        autoplay: onScroll({
-          target: industriesRef.current,
-          enter: "bottom 70%",
-        }),
-      });
-    }
-
-    // CCTV section smooth scroll animation
-    if (cctvRef.current) {
-      const el = cctvRef.current;
-      el.style.opacity = "0";
-      el.style.transform = "translateY(80px)";
-      animate(el, {
-        opacity: [0, 1],
-        translateY: [80, 0],
-        duration: 900,
-        ease: "easeOutQuad",
-        autoplay: onScroll({
-          target: cctvRef.current,
-          enter: "bottom 80%",
-        }),
-      });
-    }
-
-    // Contact section smooth scroll animation
-    if (contactRef.current) {
-      const el = contactRef.current;
-      el.style.opacity = "0";
-      el.style.transform = "translateY(100px)";
-      animate(el, {
-        opacity: [0, 1],
-        translateY: [100, 0],
-        duration: 1000,
-        ease: "easeOutQuad",
-        autoplay: onScroll({
-          target: contactRef.current,
-          enter: "bottom 85%",
-        }),
-      });
-    }
   }, []);
 
   return (
@@ -256,7 +120,7 @@ const Index = () => {
       </section>
 
       {/* Services */}
-      <section id="services" ref={servicesRef} className="section-padding" style={{ background: "#0D1B45" }}>
+      <section id="services" className="section-padding" style={{ background: "#0D1B45" }}>
         <div className="container mx-auto">
           <div className="text-center mb-16 reveal-item">
             <span className="badge-pill mb-4 inline-block">OUR SERVICES</span>
@@ -279,7 +143,7 @@ const Index = () => {
 
       {/* CCTV Animation */}
       <section className="section-padding" style={{ background: "#07122E" }}>
-        <div className="container mx-auto" ref={cctvRef}>
+        <div className="container mx-auto">
           <div className="text-center mb-10">
             <span className="badge-pill mb-4 inline-block">LIVE MONITORING</span>
             <h2 className="text-3xl md:text-4xl font-display font-black leading-tight" style={{ color: "#FFFFFF" }}>
@@ -295,7 +159,7 @@ const Index = () => {
       </section>
 
       {/* Why JSecurity */}
-      <section id="why" ref={whyRef} className="section-padding" style={{ background: "#0D1B45" }}>
+      <section id="why" className="section-padding" style={{ background: "#0D1B45" }}>
         <div className="container mx-auto">
           <div className="text-center mb-16 reveal-item">
             <span className="badge-pill mb-4 inline-block">WHY CHOOSE US</span>
@@ -316,7 +180,7 @@ const Index = () => {
       </section>
 
       {/* Industries */}
-      <section id="industries" ref={industriesRef} className="section-padding" style={{ background: "#07122E" }}>
+      <section id="industries" className="section-padding" style={{ background: "#07122E" }}>
         <div className="container mx-auto text-center">
           <span className="badge-pill mb-4 inline-block reveal-item">INDUSTRIES WE SERVE</span>
           <h2 className="text-3xl md:text-4xl font-display font-black mb-12 reveal-item leading-tight" style={{ color: "#FFFFFF" }}>
@@ -334,9 +198,7 @@ const Index = () => {
       </section>
 
       {/* Contact */}
-      <div ref={contactRef}>
-        <ContactSection />
-      </div>
+      <ContactSection />
     </div>
   );
 };
